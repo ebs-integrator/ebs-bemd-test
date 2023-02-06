@@ -23,7 +23,8 @@ class ProductViewSet(BaseListModelMixin, BaseCreateModelMixin, BaseViewSet):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        average_prices = Prices(serializer.validated_data).get_average()
+        average_prices = Prices(serializer.validated_data)
+        average_prices.get_average()
         return Response(average_prices, status=status.HTTP_200_OK)
 
 
@@ -35,6 +36,7 @@ class ProductPriceViewSet(BaseListModelMixin, BaseCreateModelMixin, BaseViewSet)
 
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
+
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
